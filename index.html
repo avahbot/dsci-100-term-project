@@ -7696,9 +7696,8 @@ a.anchor-link {
 <h2 id="2.-Questions">2. Questions<a class="anchor-link" href="#2.-Questions">¶</a></h2><p>Selected broad question: <em>What player characteristics and behaviours are most predictive of subscribing to a game-related newsletter, and how do these features differ between various player types? (question 1)</em></p>
 <p>Specific question: <strong>Can a player's age, total hours played, experience, and average play time duration within a session predict if a player would subscribe to a game-related newsletter using the players and sessions dataset?</strong></p>
 <p>This is a classification problem, so we use predictive variables to classify a player as subscribing or not subscribing to a game-related newsletter.</p>
-<p>The <code>players.csv</code> data can easily be used since it has many variables that directly relate to a player. However, the <code>sessions.csv</code> data can also be used since the hashed email can be linked to a player. One possible metric from <code>sessions.csv</code> is the average session duration that the player plays for; we can group by email, create a new column called AverageSessionDuration based on EndTime - StartTime, and summarize an average for each email. Then, we can use bind_col to add AverageSessionDuration to players and use it as a predictive variable.</p>
+<p>The <code>players.csv</code> data can easily be used since it has many variables about player characteristics. <code>sessions.csv</code> data can also be used since the hashed email can be linked to a player. One possible metric from <code>sessions.csv</code> is the average session duration that the player plays for; we can group by email, create a new column called AverageSessionDuration based on EndTime - StartTime, and summarize an average for each email. Then, we can use bind_col to add AverageSessionDuration to players and use it as a predictive variable.</p>
 <p>After wrangling the data, we can use k-nn classification to train a model, but we should probably separate our data into training/testing, tune for the best k-value, then retrain, and apply the model on the testing set to determine how good our model is.</p>
-<p>One concern is the number of observations for players, because there are only 196 players in this dataset.</p>
 </div>
 </div>
 </div>
@@ -7714,10 +7713,10 @@ a.anchor-link {
 (The code that computes these values are located near the end of the notebook)</p>
 </blockquote>
 <p>Below is some code that makes the two datasets tidy.</p>
-<p>There are also some visualizations that relate to the research question about whether or not we can predict newsletter subscription status based on the player characteristics and behaviors.</p>
-<h3 id="Experience-Plot">Experience Plot<a class="anchor-link" href="#Experience-Plot">¶</a></h3><p>This plot explores if players with different experience with Minecraft have different perentage that subscribe to the newsletter. The average percentage is about 75%, with pro, veteran, and amateur players subscribing a bit less than average, however, it is unclear whether or not to consider this statistically significant.</p>
-<h3 id="Gender-Plot">Gender Plot<a class="anchor-link" href="#Gender-Plot">¶</a></h3><p>This plot explores if players of different gender have different likelihood of subscribing to the newsletter. There does not seem to be a statistically significant difference between male and female players, and the other gender minorities do show some interesting trends but they only represent a few observations.</p>
-<h3 id="Hours-Played-and-Age-Plot">Hours Played and Age Plot<a class="anchor-link" href="#Hours-Played-and-Age-Plot">¶</a></h3><p>This scatter plot shows Hours Played vs Age, and colors points based on if they subscribed to the newsletter. It shows that players that have played a lot (&gt; 20 hours) are almost guaranteed to be subscribed, while there is no clear trend within 1 - 6 hours of play time (this is shown through 2 plots, one zoomed in more).</p>
+<p>There are also some visualizations that relate to the research question about predicting newsletter subscription based on player characteristics and behaviors.</p>
+<h3 id="Experience-Plot">Experience Plot<a class="anchor-link" href="#Experience-Plot">¶</a></h3><p>Compares if players with different experience have different perentage that subscribe. The average percentage is about 75%, with pro, veteran, and amateur players subscribing a bit less than average.</p>
+<h3 id="Gender-Plot">Gender Plot<a class="anchor-link" href="#Gender-Plot">¶</a></h3><p>Compares if players of different genders have different likelihood of subscribing. There doesn't seem to be a statistically significant difference between male and female players, and the other gender minorities show some interesting trends but they only represent a few observations.</p>
+<h3 id="Hours-Played-and-Age-Plot">Hours Played and Age Plot<a class="anchor-link" href="#Hours-Played-and-Age-Plot">¶</a></h3><p>Scatter plot shows Hours Played vs Age, and colors points based on if they subscribed. It shows that players that have played a lot (&gt; 20 hours) are almost guaranteed to be subscribed, while there is no clear trend within 1 - 6 hours of play time (this is shown through 2 plots, one zoomed in more).</p>
 </div>
 </div>
 </div>
@@ -14435,6 +14434,37 @@ BAgQIECAAAECBAgQIECAwOgSEMAaXf2ttQQIECBAgAABAgQIECBAgACBhhMQwGq4LlNhAgQI
 ECBAgAABAgQIECBAgMDoEhDAGl39rbUECBAgQIAAAQIECBAgQIAAgYYTEMBquC5TYQIECBAg
 QIAAAQIECBAgQIDA6BL4/04wJBWQSz5oAAAAAElFTkSuQmCC" width="600"/>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d98a21d3-5e75-4584-a818-9883f127a69d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="4.-Methods-and-Plan">4. Methods and Plan<a class="anchor-link" href="#4.-Methods-and-Plan">¶</a></h2><p>Using K-NN Classification.</p>
+<blockquote>
+<p>Why is this method appropriate?</p>
+</blockquote>
+<p>Question wants to predict a label (subscribed to newsletter or not) using many predictors, so k-nn classification is appropriate.</p>
+<blockquote>
+<p>Which assumptions are required, if any, to apply the method selected?</p>
+</blockquote>
+<p>Not many assumptions are required for knn classification.</p>
+<blockquote>
+<p>What are the potential limitations or weaknesses of the method selected?</p>
+</blockquote>
+<p>Might overfit to the specific dataset, especially with only 196 observations (players).</p>
+<blockquote>
+<p>How are you going to compare and select the model?</p>
+</blockquote>
+<p>The model can be evaluated using either its accuracy, recall, or precision. In this case, the positive should be subscribing to the newsletter.</p>
+<blockquote>
+<p>How are you going to process the data to apply the model? For example: Are you splitting the data? How? How many splits? What proportions will you use for the splits? At what stage will you split? Will there be a validation set? Will you use cross validation?</p>
+</blockquote>
+<p>Just use the process we've been learning in class, split into training/testing, split into folds, tune for best k value, retrain with best k value, apply model against testing data to see how good the model is.</p>
 </div>
 </div>
 </div>
